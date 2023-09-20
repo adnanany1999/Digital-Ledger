@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Digital_Ledger.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Transaction";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1>Passbook</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().AccountNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().BeneficiaryName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Amount)
+                    </th>
+                    <th>
+                        <a asp-action="AddOrEdit" class="btn btn-sm btn-success">
+                            <i class="fa-solid fa-plus"></i> New
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccountNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BeneficiaryName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            <a asp-action="AddOrEdit" asp-route-id="@item.TransactionId" class="btn btn-warning" aria-label="Edit">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+
+                            <!-- Added Delete Form here -->
+                            <form asp-action="Delete" asp-route-id="@item.TransactionId" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure to delete this record?')" aria-label="Delete">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </button>
+                            </form>
+                            <!-- End of Delete Form -->
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
